@@ -3,9 +3,11 @@ A Frinkiac/Morbotron bot for Telegram.
 
 **Usage**
 
-/simp - Random Simpsons screenshot
+`/simp` - Random screenshot
+`/simp search terms` - Searches for a screenshot using "search terms"
+`/simp "search terms"` - Searches for a screenshot AND captions the image using "search terms"
 
-/fut - Random Futurama screenshot
+*You can use /fut instead of /simp to get Futurama screenshots in the same way*
 
 **Requires**
 
