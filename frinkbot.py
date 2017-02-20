@@ -49,7 +49,7 @@ def unknown(bot, update):
     """
         Fallback behavior for unknown commands.
     """
-    msg = 'https://morbotron.com/meme/S05E01/378728/m/RnJpbmtpQm90IGRvZXMgbm90IAp3b3JrIHRoYXQgd2F5'
+    msg = 'https://morbotron.com/meme/S05E01/378728.jpg?b64lines=RnJpbmtpQm90IGRvZXMgbm90IAp3b3JrIHRoYXQgd2F5'
     bot.sendMessage(update.message.chat_id,
                     text = msg)
 
