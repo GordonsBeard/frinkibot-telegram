@@ -5,11 +5,16 @@ from config import bot_token
 
 import frinkiac
 
-logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO, filename='frinklog.log')
 logger = logging.getLogger(__name__)
 
 def screen_grabber(bot, update, args):
+    """
+        Retrieves the screenshot from frinkiac.py
+    """
     cmd = update.message.text.split()[0].lower()
+    query = " ".join(args)
+
     if cmd == '/fut':
         simpscreen = False
     else:
@@ -17,11 +22,18 @@ def screen_grabber(bot, update, args):
 
     if len(args) > 0:
         # Search terms supplied
-        pass
+        search = frinkiac.search(query, simpscreen)
+        if query.startswith('"') and query.endswith('"'):
+            returned_screen = search[0].meme_url(caption = query.split('"')[1])
+        else:
+            returned_screen = search[0].meme_url()
     else:
         # Random screen
         random_screen = frinkiac.random(simpscreen)
-        update.message.reply_text(random_screen.meme_url())
+        returned_screen = random_screen.meme_url()
+
+    logger.info('User "{0}" Search: {1} Url: {2}'.format(update.message.from_user.username, update.message.text, returned_screen))
+    update.message.reply_text(returned_screen)
 
 def start(bot, update):
     """
@@ -30,9 +42,9 @@ def start(bot, update):
 
     msg = '*GREETINGS FROM THE WORLD OF TOMORROW*\n'
     msg += '\n'
-    msg += '/simp - Get a random Simpson\'s screen.\n'
-    msg += '/simp search - Search for a Simpson\'s screen.\n'
-    msg += '/simp "search" - Search (and caption /w search) for Simpson\'s screen.\n'
+    msg += '/simp - Get a random screenshot.\n'
+    msg += '/simp search - Search for a specific screenshot.\n'
+    msg += '/simp "search" - Search for a screenshot then caption it with the search.\n'
     msg += '(You can replace /simp with /fut to get Futurama screens)'
     msg += '\n\n'
     msg += 'Simpsons - frinkiac.com\n'
